@@ -1,0 +1,37 @@
+version: '2.1'
+
+volumes:
+  db:
+
+services:
+
+  db:
+    image: mysql
+    env_file: .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=roadmap
+    healthcheck:
+      test: mysqladmin -uroot -p${DB_PASSWORD} ping && [ -e /var/lib/mysql/roadmap ]
+      interval: 5s
+      timeout: 5s
+      retries: 100
+
+    volumes:
+      - db:/var/lib/mysql
+
+  web:
+    image: ualbertalib/dmp_roadmap
+    env_file: .env
+    environment:
+      - DATABASE_URL=mysql2://root:${DB_PASSWORD}@db/roadmap
+      - RAILS_ENV=development
+      - SECRET_KEY_BASE=asdf
+      - ENABLE_TMP_LOGINS=true
+      - RAILS_SERVE_STATIC_FILES=true
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+
