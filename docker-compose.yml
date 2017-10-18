@@ -7,10 +7,10 @@ services:
 
   db:
     image: mysql
-    env_file: .env
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=roadmap
+      - DB_PASSWORD=password
     healthcheck:
       test: mysqladmin -uroot -p${DB_PASSWORD} ping && [ -e /var/lib/mysql/roadmap ]
       interval: 5s
@@ -23,14 +23,14 @@ services:
   web:
     build: .
     image: ualbertalib/dmp_roadmap
-    env_file: .env
     command: bash -c 'rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b "0.0.0.0"'
     environment:
       - DATABASE_URL=mysql2://root:${DB_PASSWORD}@db/roadmap
+      - DB_PASSWORD=password
       - RAILS_ENV=development
       - SECRET_KEY_BASE=asdf
       - ENABLE_TMP_LOGINS=true
-      - RAIoLS_SERVE_STATIC_FILES=true
+      - RAILS_SERVE_STATIC_FILES=true
     volumes:
       - .:/app
     depends_on:
