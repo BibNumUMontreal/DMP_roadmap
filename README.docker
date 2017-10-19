@@ -22,6 +22,19 @@ git clone https://github.com/ualbertalib/DMP_roadmap.git
 cd DMP_roadmap
 ``
 
+Change to config directory and create branding.yml, database.yml and secrets.yml
+examples are in the same directory. Make sure you update development password in database.yml to
+make one in .env file (default set to 'changeme' in .env file)
+``shell
+development:
+  adapter: mysql2
+  database: roadmap
+  username: root
+  password: changeme
+  encoding: utf8mb4
+``
+
+
 ### Build docker DMP_roadmap docker image
 ``shell
 docker build . -t ualbertalib/dmp_roadmap
@@ -36,6 +49,14 @@ docker-compose up -d
 ``shell
 docker-compose run web rake db:setup
 ``
+It will take a while to run db:setup, it will create DMP_roadmap database, create tables and load
+data. You will need to run
+``shell
+docker-compose up -d
+``
+again to restart web docker container.
+This procedure will have to be done once only, when you create db volume.
+If you delete db volume (docker-compose down --volumes) you will have to follow this step again.
 
 ### Go to DMP_roadmap web site
 Point your browser and go to the following url:

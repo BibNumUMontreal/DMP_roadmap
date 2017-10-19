@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 volumes:
   db:
@@ -8,11 +8,6 @@ services:
   db:
     image: mysql
     env_file: .env
-    healthcheck:
-      test:  mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} ping
-      interval: 5s
-      timeout: 5s
-      retries: 100
 
     volumes:
       - db:/var/lib/mysql
@@ -25,8 +20,7 @@ services:
     volumes:
       - .:/app
     depends_on:
-      db:
-        condition: service_healthy
+      - db
 
     ports:
       - 3000:3000
