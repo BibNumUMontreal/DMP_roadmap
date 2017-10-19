@@ -25,14 +25,14 @@ cd DMP_roadmap
 Change to config directory and create branding.yml, database.yml and secrets.yml
 examples are in the same directory. Make sure you update development password in database.yml to
 make one in .env file (default set to 'changeme' in .env file)
-``
+```
 development:
   adapter: mysql2
   database: roadmap
   username: root
   password: changeme
   encoding: utf8mb4
-``
+```
 
 
 ### Build docker DMP_roadmap docker image
