@@ -17,7 +17,7 @@ These will install `docker`, `docker-compose`, and `docker-machine` on your mach
 
 ###  Get ualbertalib/DMP_roadmap source code
 Clone the repository from github:
-``shell
+``
 git clone https://github.com/ualbertalib/DMP_roadmap.git
 cd DMP_roadmap
 ``
@@ -25,7 +25,7 @@ cd DMP_roadmap
 Change to config directory and create branding.yml, database.yml and secrets.yml
 examples are in the same directory. Make sure you update development password in database.yml to
 make one in .env file (default set to 'changeme' in .env file)
-``shell
+``
 development:
   adapter: mysql2
   database: roadmap
@@ -36,28 +36,28 @@ development:
 
 
 ### Build docker DMP_roadmap docker image
-``shell
+``
 docker build . -t ualbertalib/dmp_roadmap
 ``
 
 ### Start docker compose
-``shell
+``
 docker-compose up -d
 ``
 
 ### Run database setup (this needs to be done only once)
-``shell
+``
 docker-compose run web rake db:setup
 ``
 It will take a while to run db:setup, it will create DMP_roadmap database, create tables and load
 data. You will need to run
-``shell
+``
 docker-compose up -d
 ``
 again to restart web docker container.
 This procedure will have to be done once only, when you create db volume.
 If you delete db volume
-``shell
+``
 docker-compose down --volumes
 ``
 you will have to follow this step again.
@@ -72,17 +72,17 @@ Point your browser and go to the following url:
 
 #### Start up all the docker containers using docker compose
 
-  ``shell
+  ``
   docker-compose up -d
   ``
 
 #### Run test database setup (only need to be done once):
-  ``shell
+  ``
   docker-compose run -e "RAILS_ENV=test" web rake db:setup
   ``
 
 #### Run the test suite via rspec:
-  ``shell
+  ``
   docker-compose run -e "RAILS_ENV=test" web rspec
   ``
 
@@ -90,13 +90,12 @@ Point your browser and go to the following url:
 
   To check all container logs:
 
-  ``shell
+  ``
   docker-compose logs
   ``
 
   To check all container logs for a specific container:
 
-  ``shell
+  ``
   docker-compose logs web
   ``
-`
