@@ -56,7 +56,11 @@ docker-compose up -d
 ``
 again to restart web docker container.
 This procedure will have to be done once only, when you create db volume.
-If you delete db volume (docker-compose down --volumes) you will have to follow this step again.
+If you delete db volume
+``shell
+docker-compose down --volumes
+``
+you will have to follow this step again.
 
 ### Go to DMP_roadmap web site
 Point your browser and go to the following url:
