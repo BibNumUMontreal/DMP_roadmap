@@ -46,6 +46,8 @@ docker-compose run --rm web rake db:setup
 docker-compose run --rm web rake assets:precompile
 ```
 
+If the first command fails, there is timing issue with creation of new mysql database, db image
+becomes availabe before database being initilized, just wait a minute or two and retry it again.
 It will take a while to run db:setup, it will create DMP_roadmap database, create tables and load
 data.
 This procedure will have to be done once only, when you create db volume.
