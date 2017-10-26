@@ -40,21 +40,14 @@ development:
 docker build . -t ualbertalib/dmp_roadmap
 ``
 
-### Start docker compose
-``
-docker-compose up -d
-``
-
 ### Run database setup (this needs to be done only once)
-``
-docker-compose run web rake db:setup
-``
+```
+docker-compose run --rm web rake db:setup
+docker-compose run --rm web rake assets:precompile
+```
+
 It will take a while to run db:setup, it will create DMP_roadmap database, create tables and load
-data. You will need to run
-``
-docker-compose up -d
-``
-again to restart web docker container.
+data.
 This procedure will have to be done once only, when you create db volume.
 If you delete db volume
 ``
@@ -62,8 +55,26 @@ docker-compose down --volumes
 ``
 you will have to follow this step again.
 
+### Start docker compose
+```
+docker-compose up -d
+```
+
 ### Go to DMP_roadmap web site
 Point your browser and go to the following url:
+
+### Making database changes
+If you made database modification you will have to
+bring application down and run db:migrate rake test.
+```
+docker-compose down
+docker-compose run --rm web rake db:migrate
+```
+Then restart application again
+```
+docker-compose up -d
+```
+
 
 [localhost:3000](http://localhost:3000)
 
