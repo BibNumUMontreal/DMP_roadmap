@@ -42,13 +42,29 @@ docker build . -t ualbertalib/dmp_roadmap
 
 ### Run database setup (this needs to be done only once)
 ```
-docker-compose run --rm web rake db:setup
-docker-compose run --rm web rake assets:precompile
+docker-compose run --rm web bin/bash
 ```
 
+First, docker database image will start and then web image running bash shell.
+You will be presented with the root shell prompt.
+While database image is starting, database is in the process of being created. You have to wait a bit
+before issuing following commands:
+
+```
+rake db:setup
+rake assets:precompile
+```
+
+If the first command fails, usually indicates that database has not been created yet,
+just wait a minute or two and retry it again.
 It will take a while to run db:setup, it will create DMP_roadmap database, create tables and load
 data.
 This procedure will have to be done once only, when you create db volume.
+Once you have finish running above commands, just exit shell
+``
+exit
+``
+
 If you delete db volume
 ``
 docker-compose down --volumes
