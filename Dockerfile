@@ -1,16 +1,15 @@
 # create DMP_roadmap container from source.
 
-#FROM ruby:2.3.4
-FROM ruby:2.2.2
+FROM ruby:2.3.4
 
 RUN gem install bundler
-RUN mkdir /app
-WORKDIR /app
+ENV APP_ROOT /app
+RUN mkdir -p $APP_ROOT
+WORKDIR $APP_ROOT
 
-COPY Gemfile /app/
-COPY Gemfile.lock /app
-RUN cd /app && bundle install
+COPY Gemfile Gemfile.lock $APP_ROOT/
+RUN bundle install --jobs=3 --retry=3
+
+COPY . $APP_ROOT
 
 EXPOSE 3000
-CMD bundle exec rails s -p 3000 -b '0.0.0.0'
-
