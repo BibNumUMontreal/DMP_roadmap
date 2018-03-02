@@ -95,3 +95,7 @@ See the [Contribution Guide](https://github.com/DMPRoadmap/roadmap/wiki/Contribu
 
 #### License
 The DMP Roadmap project uses the <a href="./LICENSE.md">MIT License</a>.
+
+#### Docker
+We have added docker setup to easily setup your own local development and testing environment.
+Please refer to the [Docker Guide](./README_DOCKER.md) for more information.
