@@ -164,7 +164,7 @@ class PlansController < ApplicationController
         @plan.save
       
         if @plan.update_attributes(attrs)
-          format.html { redirect_to @plan, :editing => false, notice: success_message(_('plan'), _('saved')) }
+          format.html { redirect_to overview_plan_path(@plan), notice: success_message(_('plan'), _('saved')) }
           format.json {render json: {code: 1, msg: success_message(_('plan'), _('saved'))}}
         else
           flash[:alert] = failed_update_error(@plan, _('plan'))
@@ -254,6 +254,7 @@ class PlansController < ApplicationController
     @formatting = params[:export][:formatting] || @plan.settings(:export).formatting
     file_name = @plan.title.gsub(/ /, "_")
 
+
     respond_to do |format|
       format.html { render layout: false }
       format.csv  { send_data @plan.as_csv(@show_sections_questions),  filename: "#{file_name}.csv" }
@@ -261,13 +262,13 @@ class PlansController < ApplicationController
       format.docx { render docx: "#{file_name}.docx", content: render_to_string(partial: 'shared/export/plan') }
       format.pdf do
         render pdf: file_name,
-          margin: @formatting[:margin],
-          footer: {
-            center:    _('Created using the %{application_name}. Last modified %{date}') % {application_name: Rails.configuration.branding[:application][:name], date: l(@plan.updated_at.to_date, formats: :short)},
-            font_size: 8,
-            spacing:   (Integer(@formatting[:margin][:bottom]) / 2) - 4,
-            right:     '[page] of [topage]'
-          }
+               margin: @formatting[:margin],
+               footer: {
+                 center:    _('Created using the %{application_name}. Last modified %{date}') % {application_name: Rails.configuration.branding[:application][:name], date: l(@plan.updated_at.to_date, formats: :short)},
+                 font_size: 8,
+                 spacing:   (Integer(@formatting[:margin][:bottom]) / 2) - 4,
+                 right:     '[page] of [topage]'
+               }
       end
     end
   end

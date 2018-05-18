@@ -1,10 +1,8 @@
 <hr />
-<div class="title" style="text-align:center;">
-  <h1><%= @plan.title %></h1>
-  <p><em>
-    <%= _("A Data Management Plan created using ") + Rails.configuration.branding[:application][:name] %>
-  </em></p>
-</div>
+<h1><%= @plan.title %></h1>
+<p><em>
+  <%= _("A Data Management Plan created using ") + Rails.configuration.branding[:application][:name] %>
+</em></p>
 <br/>
 <div class="cover-page">
   <p><%= @hash[:attribution].length > 1 ? _("Creators: ") : _('Creator:') %> <%= @hash[:attribution].join(', ') %></p><br>
@@ -15,6 +13,10 @@
     <p><%= _("Template: ") + @hash[:funder] %></p><br>
   <% else %>
     <p><%= _("Template: ") + @hash[:template] + @hash[:customizer] %></p><br>
+  <% end %>
+
+  <% if @plan.principal_investigator_identifier.present? %>
+    <p><%= _("ORCID iD: ") + @plan.principal_investigator_identifier %></p> <br>
   <% end %>
 
   <% if @plan.grant_number.present? %>
