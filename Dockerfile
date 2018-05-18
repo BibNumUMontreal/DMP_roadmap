@@ -9,7 +9,6 @@ WORKDIR $APP_ROOT
 
 COPY Gemfile Gemfile.lock $APP_ROOT/
 RUN bundle install --jobs=3 --retry=3
-RUN bundle exec rake rails:update:bin
 RUN gem install i18n --version 0.7
 
 COPY . $APP_ROOT
